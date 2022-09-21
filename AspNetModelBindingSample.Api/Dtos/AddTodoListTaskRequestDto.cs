@@ -1,4 +1,8 @@
-﻿namespace AspNetModelBindingSample.Api.Dtos
+﻿// Copyright (c) Dennis Shevtsov. All rights reserved.
+// Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
+namespace AspNetModelBindingSample.Api.Dtos
 {
   public sealed class AddTodoListTaskRequestDto
   {
