@@ -6,9 +6,17 @@ namespace AspNetModelBindingSample.Api.Controllers
 {
   using Microsoft.AspNetCore.Mvc;
 
+  using AspNetModelBindingSample.Api.Dtos;
+
   [Route("api/todo-list/{todoListId}")]
   [Produces("application/json")]
   public sealed class TodoListTaskController : ControllerBase
   {
+    [HttpPost(Name = nameof(TodoListTaskController.AddTodoListTask))]
+    [Consumes("application/json")]
+    public IActionResult AddTodoListTask(AddTodoListTaskRequestDto command)
+    {
+      return Ok();
+    }
   }
 }
