@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetModelBindingSample.Api", "AspNetModelBindingSample.Api\AspNetModelBindingSample.Api.csproj", "{848BEFE6-3D20-45E8-8714-F3CC60CE849B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FunctionalTests", "FunctionalTests", "{F78BC14E-9DEE-4CDC-B425-0E88824088E4}"
+	ProjectSection(SolutionItems) = preProject
+		FunctionalTests\asp_net_model_binding_test.jmx = FunctionalTests\asp_net_model_binding_test.jmx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
