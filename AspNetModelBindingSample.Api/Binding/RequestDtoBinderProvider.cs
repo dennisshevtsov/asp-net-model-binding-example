@@ -6,11 +6,18 @@ namespace AspNetModelBindingSample.Api.Binding
 {
   using Microsoft.AspNetCore.Mvc.ModelBinding;
 
+  using AspNetModelBindingSample.Api.Dtos;
+
   public sealed class RequestDtoBinderProvider : IModelBinderProvider
   {
     public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-      throw new NotImplementedException();
+      if (context.Metadata.ModelType == typeof(AddTodoListTaskRequestDto))
+      {
+        return new RequestDtoBinder();
+      }
+
+      return null;
     }
   }
 }
