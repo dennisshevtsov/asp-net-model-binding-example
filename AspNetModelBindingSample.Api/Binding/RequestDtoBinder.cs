@@ -6,11 +6,15 @@ namespace AspNetModelBindingSample.Api.Binding
 {
   using Microsoft.AspNetCore.Mvc.ModelBinding;
 
+  using AspNetModelBindingSample.Api.Dtos;
+
   public sealed class RequestDtoBinder : IModelBinder
   {
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
-      throw new NotImplementedException();
+      bindingContext.Result = ModelBindingResult.Success(new AddTodoListTaskRequestDto());
+
+      return Task.CompletedTask;
     }
   }
 }
