@@ -8,12 +8,12 @@ namespace AspNetModelBindingSample.Api.Controllers
 
   using AspNetModelBindingSample.Api.Dtos;
 
-  [Route("api/todo-list/{todoListId}")]
+  [Route("api/todo-list/{todoListId}/task")]
   [Produces("application/json")]
   public sealed class TodoListTaskController : ControllerBase
   {
     [HttpPost(Name = nameof(TodoListTaskController.AddTodoListTask))]
-    [Consumes("application/json")]
+    [Consumes(typeof(AddTodoListTaskRequestDto), "application/json")]
     public IActionResult AddTodoListTask(AddTodoListTaskRequestDto command)
     {
       return Ok();
