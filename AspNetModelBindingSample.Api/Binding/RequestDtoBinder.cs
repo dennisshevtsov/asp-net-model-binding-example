@@ -4,6 +4,7 @@
 
 namespace AspNetModelBindingSample.Api.Binding
 {
+  using AspNetModelBindingSample.Api.Dtos;
   using Microsoft.AspNetCore.Mvc.ModelBinding;
 
   public sealed class RequestDtoBinder : IModelBinder
@@ -18,6 +19,19 @@ namespace AspNetModelBindingSample.Api.Binding
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
       _bodyModelBinder.BindModelAsync(bindingContext);
+
+      var todoListIdValue = bindingContext.ValueProvider.GetValue(nameof(AddTodoListTaskRequestDto.TodoListId));
+
+      if (!string.IsNullOrWhiteSpace(todoListIdValue.FirstValue) &&
+          Guid.TryParse(todoListIdValue.FirstValue, out var todoListId))
+      {
+        var property = bindingContext.ModelType.GetProperty(nameof(AddTodoListTaskRequestDto.TodoListId));
+
+        if (property != null)
+        {
+          property.SetValue(bindingContext.Result.Model, todoListId);
+        }
+      }
 
       return Task.CompletedTask;
     }
