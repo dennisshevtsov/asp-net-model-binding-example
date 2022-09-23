@@ -4,7 +4,8 @@
 
 namespace AspNetModelBindingSample.Api.Binding
 {
-  using AspNetModelBindingSample.Api.Dtos;
+  using System.ComponentModel;
+
   using Microsoft.AspNetCore.Mvc.ModelBinding;
 
   public sealed class RequestDtoBinder : IModelBinder
@@ -20,16 +21,24 @@ namespace AspNetModelBindingSample.Api.Binding
     {
       _bodyModelBinder.BindModelAsync(bindingContext);
 
-      var todoListIdValue = bindingContext.ValueProvider.GetValue(nameof(AddTodoListTaskRequestDto.TodoListId));
-
-      if (!string.IsNullOrWhiteSpace(todoListIdValue.FirstValue) &&
-          Guid.TryParse(todoListIdValue.FirstValue, out var todoListId))
+      if (bindingContext.Result.Model == null)
       {
-        var property = bindingContext.ModelType.GetProperty(nameof(AddTodoListTaskRequestDto.TodoListId));
+        return Task.CompletedTask;
+      }
 
-        if (property != null)
+      foreach (var property in bindingContext.ModelMetadata.Properties)
+      {
+        if (bindingContext.ActionContext.RouteData.Values.TryGetValue(property.Name, out var routeValue) &&
+            routeValue != null)
         {
-          property.SetValue(bindingContext.Result.Model, todoListId);
+          var converter = TypeDescriptor.GetConverter(property.ModelType);
+
+          if (converter != null && property.PropertySetter != null)
+          {
+            var value = converter.ConvertFrom(routeValue);
+
+            property.PropertySetter(bindingContext.Result.Model, value);
+          }
         }
       }
 
